@@ -28,7 +28,7 @@ func (s *Scanner) Run() error {
 	}
 
 	output := s.output.Generate()
-	return os.WriteFile(s.config.Output, []byte(output), 0644)
+	return os.WriteFile(s.config.Output, []byte(output), 0o644)
 }
 
 func (s *Scanner) scan() error {
@@ -67,6 +67,11 @@ func (s *Scanner) scan() error {
 }
 
 func (s *Scanner) shouldIgnore(path string) bool {
+	// Ignore file output
+	if filepath.Clean(path) == filepath.Clean(s.config.Output) {
+		return true
+	}
+
 	for _, pattern := range s.config.IgnorePatterns {
 		if strings.Contains(path, pattern) {
 			return true

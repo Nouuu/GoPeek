@@ -16,6 +16,7 @@ func DefaultConfig() Config {
 			"vendor",
 			"dist",
 			"build",
+			"go.sum",
 		},
 	}
 }

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/nouuu/gopeek/pkg/scanner"
+	"github.com/nouuu/gopeek/internal/scanner"
 	"github.com/spf13/cobra"
 )
 
