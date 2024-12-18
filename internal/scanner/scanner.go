@@ -6,19 +6,36 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/nouuu/gopeek/internal/ignore"
 )
 
 type Scanner struct {
 	rootDir string
 	config  Config
 	output  Output
+	ignore  *ignore.IgnoreList
 }
 
 func New(rootDir string, config Config) *Scanner {
+	ignoreList := ignore.New()
+
+	for _, pattern := range config.IgnorePatterns {
+		ignoreList.AddPattern(pattern)
+	}
+
+	gitignorePath := filepath.Join(rootDir, ".gitignore")
+	if _, err := os.Stat(gitignorePath); err == nil {
+		if err = ignoreList.LoadGitignore(gitignorePath); err != nil {
+			fmt.Printf("Warning: %v\n", err)
+		}
+	}
+
 	return &Scanner{
 		rootDir: rootDir,
 		config:  config,
 		output:  Output{},
+		ignore:  ignoreList,
 	}
 }
 
@@ -67,15 +84,15 @@ func (s *Scanner) scan() error {
 }
 
 func (s *Scanner) shouldIgnore(path string) bool {
-	// Ignore file output
+	// Ignore output file
 	if filepath.Clean(path) == filepath.Clean(s.config.Output) {
 		return true
 	}
 
-	for _, pattern := range s.config.IgnorePatterns {
-		if strings.Contains(path, pattern) {
-			return true
-		}
+	relPath, err := filepath.Rel(s.rootDir, path)
+	if err != nil {
+		return false
 	}
-	return false
+
+	return s.ignore.ShouldIgnore(relPath)
 }
