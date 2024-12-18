@@ -45,7 +45,7 @@ func (o *Output) AddContent(path string, relPath string) error {
 	anchor := createAnchor(path)
 
 	if isBinary {
-		o.contents = append(o.contents, fmt.Sprintf("\n# 📄 %s {#%s}\n```\n[binary file]\n```\n", relPath, anchor))
+		o.contents = append(o.contents, fmt.Sprintf("\n<a id=\"%s\"></a>\n# 📄 %s\n```\n[binary file]\n```\n", anchor, relPath))
 		return nil
 	}
 
@@ -59,8 +59,8 @@ func (o *Output) AddContent(path string, relPath string) error {
 		ext = ext[1:]
 	}
 
-	fileContent := fmt.Sprintf("\n# 📄 %s {#%s}\n```%s\n%s\n```\n",
-		relPath, anchor, ext, string(content))
+	fileContent := fmt.Sprintf("\n<a id=\"%s\"></a>\n# 📄 %s\n```%s\n%s\n```\n",
+		anchor, relPath, ext, string(content))
 	o.contents = append(o.contents, fileContent)
 	return nil
 }
@@ -116,7 +116,6 @@ func createAnchor(path string) string {
 	anchor = strings.ToLower(anchor)
 
 	// Remplace les tirets multiples par un seul tiret
-	anchor = strings.ReplaceAll(anchor, "--", "-")
 	for strings.Contains(anchor, "--") {
 		anchor = strings.ReplaceAll(anchor, "--", "-")
 	}
