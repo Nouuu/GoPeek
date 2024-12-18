@@ -1,4 +1,4 @@
-.PHONY: all build clean lint format install
+.PHONY: all build clean lint format install uninstall test
 
 BINARY_NAME=gopeek
 BUILD_DIR=build
@@ -11,11 +11,14 @@ build:
 	go build -o $(BUILD_DIR)/$(BINARY_NAME) ./cmd/main.go
 
 install:
-	go build -o $(GOPATH)/bin/$(BINARY_NAME) ./cmd/main.go
+	go install ./cmd/gopeek
+
+uninstall:
+	rm -f $(GOPATH)/bin/$(BINARY_NAME)
 
 clean:
 	rm -rf $(BUILD_DIR)
-	rm project_knowledge.md
+	rm -f project_knowledge.md
 
 lint:
 	go vet ./...
@@ -23,3 +26,6 @@ lint:
 
 format:
 	gofmt -s -w $(GO_FILES)
+
+test:
+	go test ./... -v

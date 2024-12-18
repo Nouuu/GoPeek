@@ -6,9 +6,10 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "gopeek [path]",
-	Short: "Scan a project directory and output its structure and content",
-	Args:  cobra.ExactArgs(1),
+	Use:     "gopeek [path]",
+	Example: "gopeek ./",
+	Short:   "Scan a project directory and output its structure and content",
+	Args:    cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		cfg := scanner.DefaultConfig()
 		if ignore, _ := cmd.Flags().GetStringSlice("ignore"); len(ignore) > 0 {
