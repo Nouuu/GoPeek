@@ -6,10 +6,16 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 [![Build Status](https://github.com/nouuu/gopeek/workflows/build/badge.svg)](https://github.com/nouuu/gopeek/actions?query=workflow%3Abuild)
-[![Tests Status](https://github.com/nouuu/gopeek/workflows/tests/badge.svg)](https://github.com/nouuu/gopeek/actions?query=workflow%3Atests)
+[![Tests](https://github.com/nouuu/gopeek/workflows/tests/badge.svg)](https://github.com/nouuu/gopeek/actions?query=workflow%3Atests)
+[![Lint](https://github.com/nouuu/gopeek/workflows/lint/badge.svg)](https://github.com/nouuu/gopeek/actions?query=workflow%3Alint)
+[![Security](https://github.com/nouuu/gopeek/workflows/security/badge.svg)](https://github.com/nouuu/gopeek/actions?query=workflow%3Asecurity)
+
+
 [![Release](https://img.shields.io/github/v/release/nouuu/gopeek)](https://github.com/nouuu/gopeek/releases)
 [![Issues](https://img.shields.io/github/issues/nouuu/gopeek)](https://github.com/nouuu/gopeek/issues)
 [![Pull Requests](https://img.shields.io/github/issues-pr/nouuu/gopeek)](https://github.com/nouuu/gopeek/pulls)
+[![Contributors](https://img.shields.io/github/contributors/nouuu/gopeek)](https://github.com/nouuu/gopeek/graphs/contributors)
+[![Lines of Code](https://tokei.rs/b1/github/nouuu/gopeek)](https://github.com/nouuu/gopeek)
 [![Last Commit](https://img.shields.io/github/last-commit/nouuu/gopeek)](https://github.com/nouuu/gopeek/commits/main)
 
 GoPeek is a lightweight command-line tool that generates comprehensive documentation of project structures. It recursively scans directories to create a navigable Markdown document containing both the project tree and file contents, making it ideal for project exploration and documentation.
@@ -122,8 +128,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [ ] HTML output format
 - [ ] Project analytics (LOC, file types, etc.)
 - [ ] Custom templating support
-- [ ] VS Code extension
-- [ ] Symlink handling
 - [ ] Code syntax highlighting improvements
 
 ## Acknowledgments
