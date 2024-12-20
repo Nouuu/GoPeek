@@ -1,8 +1,16 @@
 # GoPeek
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/nouuu/gopeek)](https://goreportcard.com/report/github.com/nouuu/gopeek)
-[![GoDoc](https://godoc.org/github.com/nouuu/gopeek?status.svg)](https://godoc.org/github.com/nouuu/gopeek)
+[![Go Reference](https://pkg.go.dev/badge/github.com/nouuu/gopeek.svg)](https://pkg.go.dev/github.com/nouuu/gopeek)
+[![Go Version](https://img.shields.io/github/go-mod/go-version/nouuu/gopeek)](https://golang.org/doc/devel/release.html)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+[![Build Status](https://github.com/nouuu/gopeek/workflows/build/badge.svg)](https://github.com/nouuu/gopeek/actions?query=workflow%3Abuild)
+[![Tests Status](https://github.com/nouuu/gopeek/workflows/tests/badge.svg)](https://github.com/nouuu/gopeek/actions?query=workflow%3Atests)
+[![Release](https://img.shields.io/github/v/release/nouuu/gopeek)](https://github.com/nouuu/gopeek/releases)
+[![Issues](https://img.shields.io/github/issues/nouuu/gopeek)](https://github.com/nouuu/gopeek/issues)
+[![Pull Requests](https://img.shields.io/github/issues-pr/nouuu/gopeek)](https://github.com/nouuu/gopeek/pulls)
+[![Last Commit](https://img.shields.io/github/last-commit/nouuu/gopeek)](https://github.com/nouuu/gopeek/commits/main)
 
 GoPeek is a lightweight command-line tool that generates comprehensive documentation of project structures. It recursively scans directories to create a navigable Markdown document containing both the project tree and file contents, making it ideal for project exploration and documentation.
 
