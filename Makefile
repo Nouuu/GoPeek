@@ -13,7 +13,7 @@ all: build
 
 build:
 	mkdir -p $(BUILD_DIR)
-	go build -o $(BUILD_DIR)/$(BINARY_NAME) ./cmd/main.go
+	go build -o $(BUILD_DIR)/$(BINARY_NAME) ./cmd/gopeek/main.go
 
 install:
 	go install ./cmd/gopeek
