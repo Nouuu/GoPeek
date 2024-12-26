@@ -18,7 +18,7 @@
 [![Lines of Code](https://tokei.rs/b1/github/nouuu/gopeek)](https://github.com/nouuu/gopeek)
 [![Last Commit](https://img.shields.io/github/last-commit/nouuu/gopeek)](https://github.com/nouuu/gopeek/commits/main)
 
-GoPeek is a lightweight command-line tool that generates comprehensive documentation of project structures. It recursively scans directories to create a navigable Markdown document containing both the project tree and file contents, making it ideal for project exploration, documentation and IA context providing.
+GoPeek is a lightweight command-line tool that generates comprehensive documentation of project structures. It recursively scans directories to create a navigable Markdown document containing both the project tree and file contents, making it ideal for project exploration, documentation and AI context providing.
 ## Features
 
 - 🌳 Recursive directory scanning with an intuitive tree structure
