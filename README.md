@@ -31,15 +31,15 @@ GoPeek is a lightweight command-line tool that generates comprehensive documenta
 ## Installation
 
 ```bash
-go install github.com/yourusername/gopeek@latest
+go install github.com/nouuu/gopeek/cmd/gopeek@latest
 ```
 
 Or build from source:
 
 ```bash
-git clone https://github.com/yourusername/gopeek.git
+git clone https://github.com/nouuu/gopeek.git
 cd gopeek
-make build
+make build # or make install
 ```
 
 ## Usage
