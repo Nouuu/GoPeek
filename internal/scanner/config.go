@@ -3,6 +3,7 @@ package scanner
 var DefaultIgnorePatterns = []string{
 	".git",
 	"go.sum",
+	"node_modules",
 }
 
 type Config struct {
