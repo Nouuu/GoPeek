@@ -1,4 +1,4 @@
 .idea
 coverage.txt
-dist/
-build/
+dist
+build

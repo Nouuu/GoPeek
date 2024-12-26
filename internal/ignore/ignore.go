@@ -4,45 +4,54 @@ import (
 	"bufio"
 	"os"
 	"path/filepath"
-	"slices"
 	"strings"
+	"sync"
 )
 
 type Pattern struct {
-	pattern string
-	negate  bool
+	raw      string
+	segments []string
+	negate   bool
+	matchAll bool // For ** pattern
 }
 
-type IgnoreList struct {
+type Matcher struct {
 	patterns []Pattern
+	cache    sync.Map
 }
 
-func New() *IgnoreList {
-	return &IgnoreList{}
+func NewMatcher() *Matcher {
+	return &Matcher{
+		patterns: make([]Pattern, 0),
+	}
 }
 
-func (i *IgnoreList) AddPattern(pattern string) {
-	pattern = strings.TrimSpace(pattern)
-	if pattern == "" || pattern[0] == '#' {
+func (m *Matcher) AddPattern(raw string) {
+	raw = strings.TrimSpace(raw)
+	if raw == "" || strings.HasPrefix(raw, "#") {
 		return
 	}
+	pattern := Pattern{raw: raw, segments: make([]string, 0)}
+	if strings.HasPrefix(raw, "!") {
+		pattern.negate = true
+		raw = raw[1:]
+	}
+	raw = filepath.ToSlash(raw)
 
-	negate := false
-	if pattern[0] == '!' {
-		negate = true
-		pattern = pattern[1:]
+	raw = strings.Trim(raw, "/")
+	if strings.Contains(raw, "**") {
+		pattern.matchAll = true
+		raw = strings.ReplaceAll(raw, "**/", "*")
+		raw = strings.ReplaceAll(raw, "**", "*")
 	}
 
-	if slices.ContainsFunc(i.patterns, func(p Pattern) bool {
-		return p.pattern == pattern && p.negate == negate
-	}) {
-		return
+	if raw != "" {
+		pattern.segments = strings.Split(raw, "/")
 	}
-
-	i.patterns = append(i.patterns, Pattern{pattern: pattern, negate: negate})
+	m.patterns = append(m.patterns, pattern)
 }
 
-func (i *IgnoreList) LoadGitignore(path string) error {
+func (m *Matcher) LoadFile(path string) error {
 	file, err := os.Open(path)
 	if err != nil {
 		return err
@@ -51,24 +60,62 @@ func (i *IgnoreList) LoadGitignore(path string) error {
 
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		i.AddPattern(scanner.Text())
+		m.AddPattern(scanner.Text())
 	}
 	return scanner.Err()
 }
 
-func (i *IgnoreList) ShouldIgnore(path string) bool {
-	path = filepath.ToSlash(path)
-	ignored := false
+func (m *Matcher) ShouldIgnore(path string) bool {
+	if res, ok := m.cache.Load(path); ok {
+		return res.(bool)
+	}
 
-	for _, pattern := range i.patterns {
-		if match, _ := filepath.Match(pattern.pattern, path); match {
-			ignored = !pattern.negate
-		}
-		// Support directory wilcards
-		dirPattern := strings.ReplaceAll(pattern.pattern, "**/", "")
-		if match, _ := filepath.Match(dirPattern, filepath.Base(path)); match {
+	normalizedPath := filepath.ToSlash(path)
+	segments := strings.Split(normalizedPath, "/")
+
+	ignored := false
+	for _, pattern := range m.patterns {
+		if match := pattern.matches(segments); match {
 			ignored = !pattern.negate
 		}
 	}
+
+	m.cache.Store(path, ignored)
 	return ignored
+}
+
+func (p *Pattern) matches(pathSegments []string) bool {
+	if p.matchAll {
+		return matchWildcard(p.segments, pathSegments)
+	}
+	return matchExact(p.segments, pathSegments)
+}
+
+func matchExact(pattern, path []string) bool {
+	if len(pattern) == 0 {
+		return len(path) == 0
+	}
+
+	if len(path) == 0 {
+		return false
+	}
+
+	if pattern[0] == "*" {
+		return matchExact(pattern[1:], path) || matchExact(pattern[1:], path[1:]) || matchExact(pattern, path[1:])
+	}
+
+	if matched, _ := filepath.Match(pattern[0], path[0]); matched {
+		return matchExact(pattern[1:], path[1:])
+	}
+
+	return false
+}
+
+func matchWildcard(pattern, path []string) bool {
+	for i := 0; i < len(path); i++ {
+		if matchExact(pattern, path[i:]) {
+			return true
+		}
+	}
+	return false
 }

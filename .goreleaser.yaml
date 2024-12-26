@@ -74,22 +74,22 @@ changelog:
       - "^vendor:"
   groups:
     - title: '🚀 Features'
-      regexp: "^feat[(\\w)]*:.*"
+      regexp: ".*feat.*:.*"
       order: 0
     - title: '🐛 Bug Fixes'
-      regexp: "^fix[(\\w)]*:.*"
+      regexp: ".*fix.*:.*"
       order: 1
     - title: '✨ Improvements'
-      regexp: "^enhancement[(\\w)]*:.*"
+      regexp: ".*enhancement.*:.*"
       order: 3
     - title: '📚 Documentation'
-      regexp: "^docs[(\\w)]*:.*"
+      regexp: ".*docs.*:.*"
       order: 4
     - title: '🔧 Maintenance'
-      regexp: "^chore[(\\w)]*:.*"
+      regexp: ".*chore.*:.*"
       order: 5
     - title: '👷 CI/CD'
-      regexp: "^ci[(\\w)]*:.*"
+      regexp: ".*ci.*:.*"
       order: 6
     - title: '🔍 Other Changes'
       order: 999

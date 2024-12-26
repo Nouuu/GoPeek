@@ -11,14 +11,14 @@ import (
 )
 
 type Scanner struct {
-	rootDir string
-	config  Config
-	output  Output
-	ignore  *ignore.IgnoreList
+	rootDir       string
+	config        Config
+	output        Output
+	ignoreMatcher *ignore.Matcher
 }
 
 func New(rootDir string, config Config) *Scanner {
-	ignoreList := ignore.New()
+	ignoreList := ignore.NewMatcher()
 
 	for _, pattern := range config.IgnorePatterns {
 		ignoreList.AddPattern(pattern)
@@ -26,16 +26,16 @@ func New(rootDir string, config Config) *Scanner {
 
 	gitignorePath := filepath.Join(rootDir, ".gitignore")
 	if _, err := os.Stat(gitignorePath); err == nil {
-		if err = ignoreList.LoadGitignore(gitignorePath); err != nil {
+		if err = ignoreList.LoadFile(gitignorePath); err != nil {
 			fmt.Printf("Warning: %v\n", err)
 		}
 	}
 
 	return &Scanner{
-		rootDir: rootDir,
-		config:  config,
-		output:  Output{},
-		ignore:  ignoreList,
+		rootDir:       rootDir,
+		config:        config,
+		output:        Output{},
+		ignoreMatcher: ignoreList,
 	}
 }
 
@@ -94,5 +94,5 @@ func (s *Scanner) shouldIgnore(path string) bool {
 		return false
 	}
 
-	return s.ignore.ShouldIgnore(relPath)
+	return s.ignoreMatcher.ShouldIgnore(relPath)
 }
