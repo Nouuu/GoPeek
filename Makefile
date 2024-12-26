@@ -4,7 +4,18 @@ BINARY_NAME=gopeek
 BUILD_DIR=build
 GO_FILES=$(shell find . -type f -name '*.go' -not -path "./vendor/*")
 GOLANGCI_LINT_VERSION=v1.62.2
+
+# Version information
+VERSION=$(shell git describe --tags 2>/dev/null || git describe --tags --always --dirty 2>/dev/null || echo "dev")
+COMMIT=$(shell git rev-parse --short HEAD 2>/dev/null || echo "none")
+DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ" 2>/dev/null || echo "unknown")
 CURRENT_VERSION := $(shell git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+
+# LDFLAGS for build
+LDFLAGS=-s -w \
+	-X main.version=$(VERSION) \
+	-X main.commit=$(COMMIT) \
+	-X main.date=$(DATE)
 
 tools:
 	go install github.com/golangci/golangci-lint/cmd/golangci-lint@$(GOLANGCI_LINT_VERSION)
@@ -13,10 +24,12 @@ all: build
 
 build:
 	mkdir -p $(BUILD_DIR)
-	go build -o $(BUILD_DIR)/$(BINARY_NAME) ./cmd/gopeek/main.go
+	go build -ldflags="$(LDFLAGS)" -o $(BUILD_DIR)/$(BINARY_NAME) ./cmd/gopeek/main.go
+	@echo "Built version $(VERSION) ($(COMMIT))"
 
 install:
-	go install ./cmd/gopeek
+	go install -ldflags="$(LDFLAGS)" ./cmd/gopeek
+	@echo "Installed version $(VERSION) ($(COMMIT))"
 
 uninstall:
 	rm -f $(GOPATH)/bin/$(BINARY_NAME)

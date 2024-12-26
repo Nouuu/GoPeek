@@ -19,7 +19,11 @@ builds:
     binary: gopeek
     main: ./cmd/gopeek/main.go
     flags: -trimpath
-    ldflags: -s -w -X main.version={{.Version}}
+    ldflags: |
+      -s -w
+      -X main.version={{.Version}}
+      -X main.commit={{.Commit}}
+      -X main.date={{.Date}}
 
 archives:
   - format: tar.gz
