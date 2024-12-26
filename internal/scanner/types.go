@@ -8,11 +8,14 @@ import (
 	"path/filepath"
 	"strings"
 	"unicode/utf8"
+
+	"github.com/nouuu/gopeek/internal/logger"
 )
 
 type Output struct {
 	structure []string
 	contents  []string
+	log       *logger.Logger
 }
 
 const maxFileSize = 10 * 1024 * 1024 // 10MB
