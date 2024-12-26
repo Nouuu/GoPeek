@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log/slog"
+	"os"
 	"strings"
 
 	"github.com/nouuu/gopeek/internal/logger"
@@ -11,9 +12,10 @@ import (
 )
 
 var (
-	version = "dev"
-	commit  = "none"
-	date    = "unknown"
+	version  = "dev"
+	commit   = "none"
+	date     = "unknown"
+	exitFunc = os.Exit // Makes the exit function replaceable for testing
 )
 
 var rootCmd = &cobra.Command{
@@ -59,8 +61,13 @@ func init() {
 	rootCmd.Flags().Bool("verbose", false, "Verbose output")
 }
 
+func Execute() error {
+	return rootCmd.Execute()
+}
+
 func main() {
-	if err := rootCmd.Execute(); err != nil {
-		panic(err)
+	if err := Execute(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		exitFunc(1)
 	}
 }

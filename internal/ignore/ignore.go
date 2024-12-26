@@ -84,6 +84,10 @@ func (m *Matcher) ShouldIgnore(path string) bool {
 	return ignored
 }
 
+func (m *Matcher) Patterns() []Pattern {
+	return m.patterns
+}
+
 func (p *Pattern) matches(pathSegments []string) bool {
 	if p.matchAll {
 		return matchWildcard(p.segments, pathSegments)

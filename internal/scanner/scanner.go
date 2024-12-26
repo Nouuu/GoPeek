@@ -55,6 +55,10 @@ func (s *Scanner) Run() error {
 	return os.WriteFile(s.config.Output, []byte(output), 0o644)
 }
 
+func (s *Scanner) Output() Output {
+	return s.output
+}
+
 func (s *Scanner) scan() error {
 	return filepath.Walk(s.rootDir, s.processPath)
 }
