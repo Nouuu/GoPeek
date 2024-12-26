@@ -107,7 +107,8 @@ release:
     ## GoPeek Release {{.Version}} 🚀
     
     Generate comprehensive project documentation by scanning your codebase.
-    
+
+  footer: |
     ### Quick Start
     
     **Homebrew Tap**
@@ -138,8 +139,7 @@ release:
     **Windows**
     - `gopeek_Windows_x86_64.zip`
     - `gopeek_Windows_arm64.zip`
-
-  footer: |
+    
     ### Verify Installation
     
     ```bash
