@@ -121,12 +121,32 @@ make test
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Roadmap
+## Roadmap 🗺️
 
-- [ ] HTML output format
-- [ ] Project analytics (LOC, file types, etc.)
-- [ ] Custom templating support
-- [ ] Code syntax highlighting improvements
+### Core Features ✨
+
+- [x] Basic directory scanning
+- [x] Markdown output generation
+- [x] Binary file detection
+- [x] .gitignore support
+- [x] CLI interface with cobra
+- [x] File size limits
+- [x] Github Actions CI/CD
+
+### Next Steps 🚀
+
+- [ ] Advanced Error Handling 🛡️
+    - [ ] Custom error types
+    - [ ] Error context and wrapping
+    - [ ] Operation summaries
+- [ ] Extended Output Options 📝
+    - [ ] HTML with navigation
+    - [ ] JSON output
+    - [ ] Template customization
+- [ ] Performance Features ⚡
+    - [ ] Parallel file scanning
+    - [ ] Memory usage optimization
+    - [ ] Progress indicators
 
 ## Acknowledgments
 
