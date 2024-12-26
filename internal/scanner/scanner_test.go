@@ -52,7 +52,7 @@ func TestNew(t *testing.T) {
 			scanner := New(tmpDir, tt.config, log)
 
 			if scanner == nil {
-				t.Error("Expected scanner to be created, got nil")
+				t.Fatal("Expected scanner to be created, got nil")
 			}
 
 			if scanner.config.Output != tt.config.Output {
