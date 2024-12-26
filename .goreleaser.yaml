@@ -66,11 +66,74 @@ checksum:
   algorithm: sha256
 
 changelog:
+  use: github
   sort: asc
   filters:
     exclude:
-      - "^docs:"
       - "^test:"
       - "^vendor:"
-      - "^chore:"
-      - "^ci:"
+  groups:
+    - title: '🚀 Features'
+      regexp: "^feat[(\\w)]*:.*"
+      order: 0
+    - title: '🐛 Bug Fixes'
+      regexp: "^fix[(\\w)]*:.*"
+      order: 1
+    - title: '✨ Improvements'
+      regexp: "^enhancement[(\\w)]*:.*"
+      order: 3
+    - title: '📚 Documentation'
+      regexp: "^docs[(\\w)]*:.*"
+      order: 4
+    - title: '🔧 Maintenance'
+      regexp: "^chore[(\\w)]*:.*"
+      order: 5
+    - title: '👷 CI/CD'
+      regexp: "^ci[(\\w)]*:.*"
+      order: 6
+    - title: '🔍 Other Changes'
+      order: 999
+
+release:
+  draft: false
+  prerelease: auto
+  name_template: "GoPeek v{{.Version}}"
+
+  header: |
+    ## GoPeek Release {{.Version}} 🚀
+    
+    Generate comprehensive project documentation by scanning your codebase.
+    
+    ### Quick Start
+    
+    **Homebrew Tap**
+    ```bash
+    brew install nouuu/tap/gopeek
+    ```
+    
+    **Go Install**
+    ```bash
+    go install github.com/nouuu/gopeek@{{.Version}}
+    ```
+    
+    ### Package Managers
+    - **Debian/Ubuntu**: Download `.deb` package below
+    - **RHEL/Fedora**: Download `.rpm` package below
+    - **Alpine**: Download `.apk` package below
+    - **Arch Linux**: Download `.pkg.tar.zst` package below
+
+  footer: |
+    ### Verify Installation
+    
+    ```bash
+    # Verify SHA-256 checksums
+    sha256sum -c checksums.txt
+    ```
+    
+    ### Additional Resources
+    - [📚 Documentation](https://github.com/nouuu/gopeek#readme)
+    - [🐛 Issue Tracker](https://github.com/nouuu/gopeek/issues)
+    - [💡 Feature Requests](https://github.com/nouuu/gopeek/issues/new)
+    
+    ---
+    If you find GoPeek useful, please consider giving it a ⭐️
