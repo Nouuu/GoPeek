@@ -2,9 +2,19 @@ name: security
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, dev ]
+    paths-ignore:
+      - '**.md'
+      - 'LICENSE'
+      - '.gitignore'
   pull_request:
-    branches: [ main ]
+    branches: [ main, dev ]
+    paths-ignore:
+      - '**.md'
+      - 'LICENSE'
+      - '.gitignore'
+  schedule:
+    - cron: '0 0 * * 0'  # Weekly run
 
 jobs:
   security:
