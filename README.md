@@ -39,7 +39,15 @@ Or build from source:
 ```bash
 git clone https://github.com/nouuu/gopeek.git
 cd gopeek
-make build # or make install
+make build
+```
+
+You can also install it from source :
+
+```bash
+git clone https://github.com/nouuu/gopeek.git
+cd gopeek
+make install
 ```
 
 ## Usage
@@ -54,6 +62,8 @@ Available flags:
 Flags:
   -o, --output string        Output file path (default "project_knowledge.md")
   -i, --ignore stringSlice   Patterns to ignore
+  -v, --version              Show version
+  --verbose                  Enable verbose output
 ```
 
 Example:
