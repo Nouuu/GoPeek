@@ -104,7 +104,7 @@ release:
   name_template: "GoPeek v{{.Version}}"
 
   header: |
-    ## GoPeek Release {{.Version}} 🚀
+    ## GoPeek Release v{{.Version}} 🚀
     
     Generate comprehensive project documentation by scanning your codebase.
 
@@ -118,7 +118,7 @@ release:
     
     **Go Install**
     ```bash
-    go install github.com/nouuu/gopeek@{{.Version}}
+    go install github.com/nouuu/gopeek/cmd/gopeek@v{{.Version}}
     ```
     
     ### Package Managers
