@@ -8,10 +8,43 @@ on:
 permissions:
   contents: write
 
+# Ensure all checks pass before releasing
+concurrency:
+  group: release
+  cancel-in-progress: true
+
 jobs:
+  verify:
+    name: Verify Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify build workflow
+        uses: actions/checkout@v4
+      - name: Check build status
+        run: |
+          gh run list --workflow=build.yml --branch=${GITHUB_REF#refs/tags/} --json conclusion --jq '.[0].conclusion == "success"' || exit 1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check test status
+        run: |
+          gh run list --workflow=tests.yml --branch=${GITHUB_REF#refs/tags/} --json conclusion --jq '.[0].conclusion == "success"' || exit 1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check lint status
+        run: |
+          gh run list --workflow=lint.yml --branch=${GITHUB_REF#refs/tags/} --json conclusion --jq '.[0].conclusion == "success"' || exit 1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check security status
+        run: |
+          gh run list --workflow=security.yml --branch=${GITHUB_REF#refs/tags/} --json conclusion --jq '.[0].conclusion == "success"' || exit 1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   goreleaser:
     name: GoReleaser
     runs-on: ubuntu-latest
+    needs:
+      - verify
     steps:
       - name: Checkout
         uses: actions/checkout@v4
